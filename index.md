@@ -1,4 +1,18 @@
- It's just something i tacked on to the outputs ("logits") of the final layer as an implementation detail. The original code just spat out the raw scores, so my applying softmax after optimization does not change the individual tokens ranking. 
+For me I could use an overview of what you are up to. I am confused between the implementation details of using the package and your goal of bringing in uncertainty.
+    I know nothing about ML so I may well be the wrong demographic, but for me I'd could use a simple summary of what problem you are trying to solve. Is it something like:
+
+- Typical ML does not attempt to handle uncertainty in any sort of well defined way.
+
+- Here is an example of how one might try it with common tools.
+
+    - High level description of non-uncertainty preserving system with an example
+    - High level description of your uncertainty preserving system with an example
+It looks like the first half of the note book sets up a standard system. Boy what a train set--I thought these packages were easier to setup.
+On your work, if you are using softmax() like I think you are then you are correct to have scare quotes around "probabilistic". The issue is calibration of estimates, a .6 probability means that in the wild there will be .6 of the cases will apply. I think a more accurate way of describing things is that your scores impose a ranking but you don't need softmax for that--the original scores will do.
+I think what would help is a high level description requested above will help me a ton but maybe that is because I am the wrong reader. Is this for fun? For getting a job?
+
+# Intro/Summary
+It's just something i tacked on to the outputs ("logits") of the final layer as an implementation detail. The original code just spat out the raw scores, so my applying softmax after optimization does not change the individual tokens ranking. 
 
 However,  let's say you want to rank and find the "most uncertain" outputs (sentences)  for human review.   Interestingly enough, using a custom softmax, or using a the first or second bar chart instead of the 3rd combination as I do in the notebook, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer .  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
