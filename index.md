@@ -1,4 +1,4 @@
-#What does a model know about its own confidence in its predictions?
+# What does a model know about its own confidence in its predictions?
 For me I could use an overview of what you are up to. I am confused between the implementation details of using the package and your goal of bringing in uncertainty.
     I know nothing about ML so I may well be the wrong demographic, but for me I'd could use a simple summary of what problem you are trying to solve. Is it something like:
 
