@@ -3,7 +3,7 @@
 
 This work explores model uncertainty scoring in Machine Learning, using Machine Translation using Neural Nets (Attention) as a toy example.  
 
-![Image](src)
+![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true)
 
 
 
