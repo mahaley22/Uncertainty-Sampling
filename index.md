@@ -5,10 +5,6 @@ This work explores model uncertainty scoring in Machine Learning, using Machine 
 
 ![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true)
 
-
-
-
-
 - Here is an example of how one might try it with common tools.
 
     - High level description of non-uncertainty preserving system with an example
@@ -29,7 +25,7 @@ I think what would help is a high level description requested above will help me
 
     5) "How":  to improve the model as quickly and cost-effectively as possible?
 
-As a practitioner of Applied ML for a number of years now, I'm not alone in having this question posed to me, hopefully by myself, or at times by others like internal stakeholders or customers.  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
+As a practitioner of Applied ML for a number of years now, I'm not alone in having these questions posed to me, by myself, or worse at times, by others like internal stakeholders or customers.  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
 
 So we all know the saying: all models are wrong, but some are useful.  
 These days, we hear a lot about things that may or may not be useful about models other than their raw accuracy.  No matter how accurate or *good* one's model is, not only will there will always be things like data drift, concept drift, or simply generalization issues on things the model hasn't seen or tested for before (see checklist paper). So that's where Active Learning comes in to answer some of these questions: And, where do you have humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  When should a human cgecj the output that needs it for possible correction and training?  How do we know what the model(s) know they know, know what they don't know, and don't know either? 
@@ -40,16 +36,17 @@ And worse yet, how can one even tease out such information  of a deep learning a
  the process I hope to make the case that yes, the model "knows" what it does and doesn't know, and that this follows a pattern that is helpful for analysis, in 
 
 # Methodology
-For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the system can be trying to say " something about its own uncertainty - not just on the overall output sentence let's say, but on the constituent sub-tokens.  In
+Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.
+For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the system can be trying to say " something about its own uncertainty - not just on the overall output sentence let's say, but on the constituent sub-tokens.  
 
 Let's say you want to rank and find the "most uncertain" outputs (in this case, sentences)  for human review and possible (re)training.   Interestingly enough, using a custom softmax, or using a the first or second bar chart instead of the 3rd combination as I do in the notebook, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer .  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
-lot of potential confusion, pardon the pun among uncertainty and confidence and probability
+By the way there can be lot of potential confusion, pardon the pun among uncertainty and confidence and probability
 I'm not necessarily breaking new ground here for using uncertainty in MT or ML, but I've never yet seen an implementation that "paints a picture" for practitioners in industry, maybe just another widget in their toolkit to bear in mind as we consider more things  than raw accuracy or throughput or computational cost.  
 
 ## Some interesting examples
 
-Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token.  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the "wrong" results are at least somewhat explainable.  Also, can knowing more about the model confusion infoitself to try different things, like in this case increase the beam width?
+Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the "wrong" results are at least somewhat explainable.  Also, can knowing more about the model confusion infoitself to try different things, like in this case increase the beam width?
 
 You can use the [editor on GitHub](https://github.com/mahaley22/Uncertainty-Sampling/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
