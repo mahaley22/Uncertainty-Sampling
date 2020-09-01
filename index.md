@@ -1,4 +1,4 @@
-# Model Confidence: can a model "know" when it's "bad"?
+# Model (Un)certainty: can a model "know" when it's bad "bad" or "good"?
 (warning: I may over-use "scare quotes" in this piece)
 
 This work explores model uncertainty scoring in Machine Learning, using Machine Translation using Neural Nets (Attention) as a toy example.  
@@ -40,6 +40,7 @@ For this little exercise I've chosen a toy Machine Learning example, which affor
 
 Let's say you want to rank and find the "most uncertain" outputs (in this case, sentences)  for human review and possible (re)training.   Interestingly enough, using a custom softmax, or using a the first or second bar chart instead of the 3rd combination as I do in the notebook, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer .  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
+lot of potential confusion, pardon the pun among uncertainty and confidence and probability
 I'm not necessarily breaking new ground here for using uncertainty in MT or ML, but I've never yet seen an implementation that "paints a picture" for practitioners in industry, maybe just another widget in their toolkit to bear in mind as we consider more things  than raw accuracy or throughput or computational cost.  
 
 ## Some interesting examples
