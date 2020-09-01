@@ -20,9 +20,13 @@ I think what would help is a high level description requested above will help me
 # Intro/Summary
 
 1) "Where": more automatically detecting errors in unlabelled sets and production
+
 2) "What": targetted sampling for enhancing training or dev/test sets
+
 3) "Why": "Why did the model get this wrong?"  (everybody's favorite question in ML)
+
 4) "When": detecting model drift by measuring aggregate uncertainty
+
 5) "How":  to improve the model as quickly and cost-effectively as possible?
 
 As a practitioner of Applied ML for a number of years now, I'm not alone in having this question posed to me, hopefully by myself, or at times by others like internal stakeholders or customers.  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
