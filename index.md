@@ -1,6 +1,10 @@
-# What does a model know about its own confidence in its predictions?
-This work explores model uncertainty levels in ML, using Machine Translation using Neural Nets (Attention) as an example.  This was motivated in part in order to convince myself and now maybe an audience that model uncertainty ... works.  It's certaintly not the only tool that we have
-1) detecting errors on generalized (
+# Model Confidence: can a "bad" model "know" when it's "bad"?
+(warning: I may use a lot of "scare quotes" in this piece)
+This work explores model uncertainty scoring in Machine Learning, using Machine Translation using Neural Nets (Attention) as a toy example.  
+
+
+
+
 
 - Here is an example of how one might try it with common tools.
 
@@ -11,13 +15,25 @@ On your work, if you are using softmax() like I think you are then you are corre
 I think what would help is a high level description requested above will help me a ton but maybe that is because I am the wrong reader. Is this for fun? For getting a job?
 
 # Intro/Summary
-It seems like these days we hear a lot about things other than accuracy.  Did an "accurate" model fail miserably on a "checklist" test?  No matter how accurate or *good* one's model is, not only will there will always be things like data drift, concept drift, or simply generalization issues on things the model hasn't seen before. So that's where Active Lerning comes in to answer some of these questions: And, where do you have humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  When should a human cgecj the output that needs it for possible correction and training?  How do we know what the model(s) know they know, know what they don't know, and don't know either? 
+
+1) "Where": more automatically detecting errors in unlabelled sets and production
+2) "What": targetted sampling for enhancing training or dev/test sets
+3) "Why": "Why did the model get this wrong?"  (everybody's favorite question in ML)
+4) "When": detecting model drift by measuring aggregate uncertainty
+5) "How":  to improve the model as quickly and cost-effectively as possible?
+
+As a practitioner of Applied ML for a number of years now, I'm not alone in having this question posed to me, hopefully by myself, or at times by others like internal stakeholders or customers.  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
+
+So we all know the saying: all models are wrong, but some are useful.  These days,
+we hear a lot about things that may or may not be useful about models other than their raw accuracy.  No matter how accurate or *good* one's model is, not only will there will always be things like data drift, concept drift, or simply generalization issues on things the model hasn't seen or tested for before (see checklist paper). So that's where Active Learning comes in to answer some of these questions: And, where do you have humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  When should a human cgecj the output that needs it for possible correction and training?  How do we know what the model(s) know they know, know what they don't know, and don't know either? 
 
 And yet, by definition the goal of optimizing a model is not primarily (at least when we're talking about conditional modeling, like in Machine Translation) in the business of generating accurate "probabilities" or confidences for those predictions.  And how explainable are the results?
 
-And worse yet, how can one even tease such information out of a deep learning algorithm, which by its nature is a nested non-linear structure? 
+And worse yet, how can one even tease out such information  of a deep learning algorithm, which by its nature is a nested non-linear structure? 
+ the process I hope to make the case that yes, the model "knows" what it does and doesn't know, and that this follows a pattern that is helpful for analysis, in 
 
-For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the system can seem " something about its own uncertainty - not just on the overall output sentence let's say, but on the constituent sub-tokens.  In the process I hope to make the case that yes, the model "knows" what it does and doesn't know, and that this follows a pattern that is helpful for analysis, in 
+# Methodology
+For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the system can be trying to say " something about its own uncertainty - not just on the overall output sentence let's say, but on the constituent sub-tokens.  In
 
 Let's say you want to rank and find the "most uncertain" outputs (in this case, sentences)  for human review and possible (re)training.   Interestingly enough, using a custom softmax, or using a the first or second bar chart instead of the 3rd combination as I do in the notebook, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer .  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
@@ -25,7 +41,7 @@ I'm not necessarily breaking new ground here for using uncertainty in MT or ML, 
 
 ## Some interesting examples
 
-Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token.  This could be of help for humans in the loop correcting these translations, for example.  Thus the "wrong" results are at least somewhat explainable.
+Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token.  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the "wrong" results are at least somewhat explainable.  Also, can knowing more about the model confusion infoitself to try different things, like in this case increase the beam width?
 
 You can use the [editor on GitHub](https://github.com/mahaley22/Uncertainty-Sampling/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
@@ -34,6 +50,9 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 ### Overall Results
 
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
+
+### Conclusions:
+
 
 **Bold** and _Italic_ and `Code` text
 
