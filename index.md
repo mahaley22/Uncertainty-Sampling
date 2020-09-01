@@ -56,6 +56,8 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
 
+mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.
+
 ### Conclusions:
 
 
