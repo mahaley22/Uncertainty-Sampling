@@ -19,20 +19,20 @@ I think what would help is a high level description requested above will help me
 
 # Intro/Summary
 
-1) "Where": more automatically detecting errors in unlabelled sets and production
+    1) "Where": more automatically detecting errors in unlabelled sets and production
 
-2) "What": targetted sampling for enhancing training or dev/test sets
+    2) "What": targetted sampling for enhancing training or dev/test sets
 
-3) "Why": "Why did the model get this wrong?"  (everybody's favorite question in ML)
+    3) "Why": "Why did the model get this wrong?"  (everybody's favorite question in ML)
 
-4) "When": detecting model drift by measuring aggregate uncertainty
+    4) "When": detecting model drift by measuring aggregate uncertainty
 
-5) "How":  to improve the model as quickly and cost-effectively as possible?
+    5) "How":  to improve the model as quickly and cost-effectively as possible?
 
 As a practitioner of Applied ML for a number of years now, I'm not alone in having this question posed to me, hopefully by myself, or at times by others like internal stakeholders or customers.  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
 
-So we all know the saying: all models are wrong, but some are useful.  These days,
-we hear a lot about things that may or may not be useful about models other than their raw accuracy.  No matter how accurate or *good* one's model is, not only will there will always be things like data drift, concept drift, or simply generalization issues on things the model hasn't seen or tested for before (see checklist paper). So that's where Active Learning comes in to answer some of these questions: And, where do you have humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  When should a human cgecj the output that needs it for possible correction and training?  How do we know what the model(s) know they know, know what they don't know, and don't know either? 
+So we all know the saying: all models are wrong, but some are useful.  
+These days, we hear a lot about things that may or may not be useful about models other than their raw accuracy.  No matter how accurate or *good* one's model is, not only will there will always be things like data drift, concept drift, or simply generalization issues on things the model hasn't seen or tested for before (see checklist paper). So that's where Active Learning comes in to answer some of these questions: And, where do you have humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  When should a human cgecj the output that needs it for possible correction and training?  How do we know what the model(s) know they know, know what they don't know, and don't know either? 
 
 And yet, by definition the goal of optimizing a model is not primarily (at least when we're talking about conditional modeling, like in Machine Translation) in the business of generating accurate "probabilities" or confidences for those predictions.  And how explainable are the results?
 
