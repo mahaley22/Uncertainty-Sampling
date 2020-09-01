@@ -1,5 +1,6 @@
-# Model Confidence: can a "bad" model "know" when it's "bad"?
+# Model Confidence: can a model "know" when it's "bad"?
 (warning: I may use a lot of "scare quotes" in this piece)
+
 This work explores model uncertainty scoring in Machine Learning, using Machine Translation using Neural Nets (Attention) as a toy example.  
 
 
