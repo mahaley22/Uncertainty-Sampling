@@ -1,4 +1,4 @@
-# Model (Un)certainty: can a model "know" when it's bad "bad" or "good"?
+# Leveraging Model (Un)certainty: can a model "know" when it's"bad" or "good"?
 (warning: I may over-use "scare quotes" in this piece)
 
 This work explores model uncertainty scoring in Machine Learning, using Machine Translation using Neural Nets (Attention) as a toy example.  
@@ -56,7 +56,7 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
 
-mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.
+mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.  Put another way, our True Negatives are overwhelmingly concentrated at the high uncertainty percentiles.
 
 ### Conclusions:
 
