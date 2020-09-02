@@ -57,11 +57,11 @@ One challenge with this datset is that there is a lack of complete alternate ref
 1) acceptable replacement with an acceptable synonym, e.g. "perplexed/confused", "this/that".  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG = 100x100)
+<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" width="200" height="200" />
 
 2) non-acceptable
 
 3) whole section of a sentence that are problematic 
-![second clause problematic ](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG)
 <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok" width="300" height="200" />
 
 
