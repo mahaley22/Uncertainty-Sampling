@@ -14,7 +14,7 @@ It looks like the first half of the note book sets up a standard system. Boy wha
 On your work, if you are using softmax() like I think you are then you are correct to have scare quotes around "probabilistic". The issue is calibration of estimates, a .6 probability means that in the wild there will be .6 of the cases will apply. I think a more accurate way of describing things is that your scores impose a ranking but you don't need softmax for that--the original scores will do.
 I think what would help is a high level description requested above will help me a ton but maybe that is because I am the wrong reader. Is this for fun? For getting a job?
 
-# Intro/Summary
+## Intro/Summary
 
     1) "Where": more automatically detecting errors on "in the wild" unlabelled sets and production
 
@@ -28,21 +28,22 @@ I think what would help is a high level description requested above will help me
 
 As a practitioner of Applied ML for a number of years now, I'm not alone in having these questions posed to me, by myself, or worse at times, by others like internal stakeholders or customers.  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
 
-So we all know the saying: all models are wrong, but some are useful. Raw accuracy using a single metric is not the only measure of a model.  So how else can a model be useful?
+So we all know the saying: all models are wrong, but some are useful. Raw accuracy using a single metric is usually not the only measure of a model.   So how else can a model be useful?
 
 No matter how accurate or *good* one's model is, not only will there will always be things like data drift, concept drift, or simply generalization issues on things the model hasn't seen or tested for before (see checklist paper).  As in other types of software, how does CI/CD and maintenance come in, and how does a model help/hinder that?
 
-Active Learning comes in to answer some of these questions: How do we optimize for humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  For which outputs should a human have a look at outputs for possible correction and training?  How do we know what the model(s) know they know, know what they don't know, and don't know either? 
+Active Learning comes in to answer some of these questions: How do we optimize for humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  F which outputs should a human have a look at outputs for possible correction and training?  Active Learning has a lot of tools in the toolkit for sampling and iterating, both within the models and outside them.  this model will look at just 2 or 3 in-model metrics to show that 
 
-And yet, by definition the goal of optimizing any machine learning model is not primarily (at least when we're talking about conditional modeling, like in Machine Translation) in the business of generating accurate "probabilities" or confidences for those predictions.  And how explainable are the results?
+And yet, by definition the goal of optimizing any machine learning model is not primarily (at least when we're talking about conditional modeling, like in Machine Translation) in the business of generating accurate "probabilities" or confidences for those predictions.  And how explainable/interpretibleare the results?
 
 And worse yet, how can one even tease out such information of a deep learning algorithm, which by its nature is a nested non-linear structure? 
 This notebook strongly indicates a NN model for MT can yield useful information and metrics that are helpful for analysis and Active Learning.
 
-# Methods used
+## Methods used
 
-For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say ... something about its own uncertainty.  The choice of MT affords a look at not just on the overall output sentence let's say, but on the constituent sub-tokens.  
+For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say ... something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility. 
 
+So as part of
 Let's say you want to rank and find the "most uncertain" outputs (in this case, sentences)  for human review and possible (re)training.   Interestingly enough, using a custom softmax, or using a the first or second bar chart instead of the 3rd combination as I do in the notebook, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer .  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
 The original model's output just selected the maximum raw score (logits) from each timestamp.  To that this notebook adds (post-optimization) a softmax normalization, so that for a given timestamp, all the scores add up to one.
@@ -63,13 +64,13 @@ You can use the [editor on GitHub](https://github.com/mahaley22/Uncertainty-Samp
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Overall Results
+## Overall Results
 
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
 
 mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.  Put another way, our True Negatives are overwhelmingly concentrated at the high uncertainty percentiles.
 
-### Conclusions:
+## Conclusions:
 
 
 **Bold** and _Italic_ and `Code` text
