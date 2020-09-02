@@ -56,7 +56,7 @@ I'm not necessarily breaking new ground here for using uncertainty in MT or ML, 
 One challenge with this datset is that there is a lack of complete alternate reference translations.  So when mismatches between the source and target do occur, 
 1) acceptable replacement with an acceptable synonym, e.g. "perplexed/confused", "this/that".  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty
 2) non-acceptable
-![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true)
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?raw=true)
 Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat explainable.  Also, can knowing more about the model confusion infoitself to try different things, like in this case increase the beam width?
 
 Put "This vs. that" vs. "confused vs. embarassed" 
