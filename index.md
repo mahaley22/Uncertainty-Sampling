@@ -1,18 +1,10 @@
 # Leveraging Model (Un)certainty: can a model "know" when it's predictions are incorrect or not?
-(warning: I may over-use "scare quotes" in this piece)
 
-This work explores model uncertainty scoring in Machine Learning, using Machine Translation using Neural Nets (Attention) as a toy example.  
+This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
 
 ![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true)
 
 Show that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.
-- Here is an example of how one might try it with common tools.
-
-    - High level description of non-uncertainty preserving system with an example
-    - High level description of your uncertainty preserving system with an example
-It looks like the first half of the note book sets up a standard system. Boy what a train set--I thought these packages were easier to setup.
-On your work, if you are using softmax() like I think you are then you are correct to have scare quotes around "probabilistic". The issue is calibration of estimates, a .6 probability means that in the wild there will be .6 of the cases will apply. I think a more accurate way of describing things is that your scores impose a ranking but you don't need softmax for that--the original scores will do.
-I think what would help is a high level description requested above will help me a ton but maybe that is because I am the wrong reader. Is this for fun? For getting a job?
 
 ## Intro/Summary
 
@@ -26,7 +18,7 @@ I think what would help is a high level description requested above will help me
 
     5) "How":  to improve the model as quickly and cost-effectively as possible?
 
-As a practitioner of Applied ML for a number of years now, I'm not alone in having these questions posed to me, by myself, or worse at times, by others like internal stakeholders or customers.  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
+As a practitioner of Applied ML for a number of years now, I'm not alone in having these questions posed to me at various times (by myself, or worse  by others like internal stakeholders or customers).  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
 
 So we all know the saying: all models are wrong, but some are useful. Raw accuracy using a single metric is usually not the only measure of a model.   So how else can a model be useful?
 
@@ -47,7 +39,7 @@ So as part of
 Let's say you want to rank and find the "most uncertain" outputs (in this case, sentences)  for human review and possible (re)training.   Interestingly enough, using a custom softmax, or using a the first or second bar chart instead of the 3rd combination as I do in the notebook, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer .  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
 The original model's output just selected the maximum raw score (logits) from each timestamp.  To that this notebook adds (post-optimization) a softmax normalization, so that for a given timestamp, all the scores add up to one.
-Without making too much fuss about it, I'll just pause to note that the potentital confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* a 
+Without making too much fuss about it, I'll just pause to note that the potentital confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics MORE HERE
 I'm not necessarily breaking new ground here for using uncertainty in MT or ML, but I've never yet seen an implementation that "paints a picture" for practitioners in industry, maybe just another widget in their toolkit to bear in mind as we consider more things  than raw accuracy or throughput or computational cost.  
 
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
