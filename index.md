@@ -57,12 +57,12 @@ One challenge with this datset is that there is a lack of complete alternate ref
 1) acceptable replacement with an acceptable synonym, e.g. "perplexed/confused", "this/that".  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG = 100x100)
-<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" width="200" height="200" />
+<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" width="300" height="300" />
 
 2) non-acceptable
 
 3) whole section of a sentence that are problematic 
-<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok" width="300" height="200" />
+<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG" width="500" height="200" />
 
 
 Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat explainable.  Also, can knowing more about the model confusion infoitself to try different things, like in this case increase the beam width?
