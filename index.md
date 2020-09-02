@@ -1,5 +1,5 @@
 # Leveraging Model (Un)certainty
-_ Or: : can a model "know" when it's predictions are incorrect or not?_ 
+_Or: : can a model "know" when it's predictions are incorrect or not?_ 
 
 This work explores model uncertainty scoring in Neural Net Machine Learning error analysis, using Machine Translation (Attention) as a use case.  
 
@@ -53,7 +53,7 @@ Here I'll just pause to note that the potentital confusion (pardon the pun) amon
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
 ## Some Uncertainty sampling classes
-One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mis=matches.  Let's consider positives and negatives in the context of uncertainty:
+One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mis=matches.  Let's consider positives and negatives in the context of both uncertainty and matching:
 
 1) True Negatives (bad translations with higher uncertainty):
 
@@ -71,6 +71,8 @@ One challenge with this datset is that there is usually exactly one reference tr
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?raw=true&width="500"height="400")
 
 4) If we consider mis=matches with low uncertainty as our definition of False Positives, we do find a few in our exploration of underfitting of the training set and variance of the validation set, again offering up samples we might not have considered otherwise for training or model refinement.
+
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Believable%20versus%20reliable.PNG?raw=true&width="500"height="400")
 
 
 
