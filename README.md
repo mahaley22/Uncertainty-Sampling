@@ -5,3 +5,5 @@
 This notebook trains a sequence to sequence (seq2seq) model for machine translation, using Attention. However, instead of looking at the Attention plots, we will be looking at a whole lot of Uncertainty plots and aggregating by uncertainty to reveal some directions for analyzing avoidable bias, variance, and sampling for Active Learning.  
 
 This work was inspired in part by *Human-in-the-Loop Machine Learning* by Robert Munro © 2020  
+
+For a more thorough summary of this work please have a look at [Uncertainty Scoring in ML](https://pages.github.com/).https://mahaley22.github.io/Uncertainty-Scoring/)
