@@ -2,7 +2,7 @@
 
 This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
 
-![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true)
+![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/A%20slight%20confusion.PNG?raw=true)
 
 Show that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.
 
