@@ -75,7 +75,7 @@ One challenge with this datset is that there is usually exactly one reference tr
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Believable%20versus%20reliable.PNG?raw=true&width="500"height="400")
 
-5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty.
+5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty in the notebook.
 
 
 
