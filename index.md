@@ -53,28 +53,29 @@ Here I'll just pause to note that the potentital confusion (pardon the pun) amon
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
 ## Some Uncertainty sampling classes
-One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mis=matches.  Let's consider positives and negatives in the context of both uncertainty and matching:
+One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mis=matches.  (There are no False Positives among Matches)  Let's consider positives and negatives in the context of both uncertainty and matching:
 
-1) True Negatives (bad translations with higher uncertainty):
+1) *True Negatives with respect to mis-matches*:
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true&width=300&height=300)
 
-2) *False Negatives* with respect to mis-matches (good alternate translations with low uncertainty): acceptable replacement with an synonymous word or words, e.g. "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
+2) *False Negatives with respect to mis-matches* (good alternate translations with low uncertainty): often acceptable replacement with an synonymous word or words, e.g. "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
 
-2a) Partially FN, partially TN hyvrid, where a whole subclause can be correct and then another goes off the rails: 
+    2a) Partially FN, partially TN hyvrid, where a whole subclause can be correct and then another goes off the rails: 
+    
 ![Image](<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?raw=true&width="1000"&height="500")
 
-2b) Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets:
+    2b) Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets:
 
-3) False Negatives w.r.t. uncertainty can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
+3) *False Negatives w.r.t. uncertainty* can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?raw=true&width="500"height="400")
 
-4) If we consider mis=matches with low uncertainty as our definition of False Positives, we do find a few in our exploration of underfitting of the training set and variance of the validation set, again offering up samples we might not have considered otherwise for training or model refinement.
+4) *False Positives w.r.t. uncertainty*: mis-translations with low uncertainty, we do find a few in our exploration of underfitting of the training set and variance of the validation set, again offering up samples we might not have considered otherwise for training or model refinement.  These will be harder to find with this method but if they do arise in a low uncertainty context, this can be prioritized.
+
+5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty.
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Believable%20versus%20reliable.PNG?raw=true&width="500"height="400")
-
-
 
 
 Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat explainable.  Also, can knowing more about the model confusion info itself to try different things, like in this case increase the beam width?
@@ -84,8 +85,11 @@ Its interesting to note sometimes which individual words/tokens will have high u
 
 ## Aggregate Results
 With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  In one run 
+
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
-But it usually holds true that the distribution is more even but still significant:
+
+But that is not usually the case.  
+But it usually holds true that both the distribution of mis-matched bad translations is weighted in the high uncertainty.  
 
 
 But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Negatives in high uncertainty.
