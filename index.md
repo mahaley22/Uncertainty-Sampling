@@ -1,5 +1,5 @@
 # Leveraging Model (Un)certainty
-_Or: : can a model "know" when it's predictions are incorrect or not?_ 
+_Can a model "know" when it's predictions are incorrect or not?_ 
 
 This work explores model uncertainty scoring in Neural Net Machine Learning error analysis, using Machine Translation (Attention) as a use case.  
 
