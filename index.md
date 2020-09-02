@@ -3,11 +3,9 @@ _ Or: : can a model "know" when it's predictions are incorrect or not?_
 
 This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
 
-![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true&width="500"&height="450")
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG?raw=true&width="400"&height="450")
+![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true&width="500"&height="450")  ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG?raw=true&width="400"&height="450")
 
-
-As a teaser, the above two examples show uncertainty for a couple of translated sentences.  The higher the bar, the higher the uncertainty for given output token. The left shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The right shows low uncertainty despite the "perplexed"/"confused" switch.  I guess we're certain that we're confused!
+The above two examples are teaser examples uncertainty for a couple of translated sentences.  Basically, the higher the uncertainty for given output token. The first shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The second shows low uncertainty despite the "perplexed"/"confused" switch.  I guess we're certain that we're confused!
 
 The notebook in this repo demonstrates that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.
 
@@ -37,56 +35,65 @@ And worse yet, how can one even tease out such information of a deep learning al
 This notebook strongly indicates a NN model for MT can yield useful information and metrics that are helpful for analysis and Active Learning.
 
 ## Methods used
+This notebook trains a sequence to sequence (seq2seq) model for machine translation, using Attention. However, instead of looking at the Attention plots, we do the following:
 
+1) Explore the data by aggregate uncertainty for analyzing avoidable bias, variance, and sampling for Active Learning
+2) Use Uncertainty plots in order to drive analysis and interpretibility of results.
+
+This work was inspired in part by Human-in-the-Loop Machine Learning by Robert Munro © 2020
 For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say ... something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility. 
 
 So as part of
 Let's say you want to rank and find the "most uncertain" outputs (in this case, sentences)  for human review and possible (re)training.   Interestingly enough, using a custom softmax, or using a the first or second bar chart instead of the 3rd combination as I do in the notebook, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer .  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
-The original model's output just selected the maximum raw score (logits) from each timestamp.  To that this notebook adds (post-optimization) a softmax normalization, so that for a given timestamp, all the scores add up to one.
-Without making too much fuss about it, I'll just pause to note that the potentital confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics MORE HERE
-I'm not necessarily breaking new ground here for using uncertainty in MT or ML, but I've never yet seen an implementation that "paints a picture" for practitioners in industry, maybe just another widget in their toolkit to bear in mind as we consider more things  than raw accuracy or throughput or computational cost.  
+The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (post-optimization) a softmax normalization is added, so that for a given timestamp, all the scores add up to one.
+
+Here I'll just pause to note that the potentital confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics MORE HERE
 
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
 ## Some interesting examples
-One challenge with this datset is that there is a lack of complete alternate reference translations.  So when mismatches between the source and target do occur, 
-1) acceptable replacement with an synonymous word or words, e.g. "perplexed/confused", "this/that", "keep" vs. "put" (image above).  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty
+One challenge with this datset is that there is a lack of complete alternate reference translations. We consider all word-for-word matches as True Positives. So when mismatches between the source and target do occur, 
+
+1) True Negatives (bad translations):
+
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true)
+
+
+2) False Negatives: acceptable replacement with an synonymous word or words, e.g. "perplexed/confused", "this/that", "keep" vs. "put" (image above).  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty.
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG = 100x100)
 <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" raw=true width="500" height="400" />
 
-2) non-acceptable
-
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true)
-
 3) whole section of a sentence that are problematic 
-<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG" raw=true width="1000" height="500" />
+![Image](<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?raw=true&width="1000"&height="500")
+
+4) If we consider mis=matches with high confidence as our definition of False Positives, we do find a few in our exploration of underfitting of the training set and variance of the validation set.
 
 
 Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat explainable.  Also, can knowing more about the model confusion infoitself to try different things, like in this case increase the beam width?
+
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Runner-up%20was%20correct!.PNG?raw=true)
 
 
-Put "This vs. that" vs. "confused vs. embarassed" 
-Admittedly your plan makes sense
-
-You can use the [editor on GitHub](https://github.com/mahaley22/Uncertainty-Sampling/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-## Overall Results
-
+## Aggregate Results
+With some variation in the ratios, the density of matches (positives) is higher the lower the certainty.
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
+
+But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Positives the higher the uncertainty.
 
 mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.  Put another way, our True Negatives are overwhelmingly concentrated at the high uncertainty percentiles.
 
 ## Conclusions:
 
+I'm not necessarily breaking new ground here for using uncertainty in MT or ML, but thought it would be worthwhile to do exploration with illustrations than raw accuracy or throughput or computational cost.  This shows that :
+1. 
 
-**Bold** and _Italic_ and `Code` text
+## References:
+1. 
 
-[Link](url) and ![Image](src)
+
+
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
