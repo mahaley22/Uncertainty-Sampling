@@ -2,6 +2,8 @@
 
 This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
 
+![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true&width="500"&height="450")
+
 <img src="https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG" raw=true width="500" height="450" /> <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG" raw=true width="400" height="450" />
 
  <img src="/images/Aslightconfusion.PNG" raw="true" width="400" height="450" />
