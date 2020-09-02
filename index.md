@@ -2,7 +2,7 @@
 
 This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
 
-<img src="https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG" width="500" height="450" /> <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/A%20slight%20confusion.PNG" width="400" height="450" />
+<img src="https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG" width="500" height="450" /> <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/A light confusion.PNG" width="400" height="450" />
 
 As a teaser, the above two examples show uncertainty for a couple of translated sentences.  The higher the bar, the higher the uncertainty for given output token. The left shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The right shows low uncertainty despite the "perplexed"/"confused" switch.  I guess we're certain that we're confused!
 
