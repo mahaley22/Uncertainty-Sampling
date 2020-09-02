@@ -6,7 +6,7 @@ This notebook trains a sequence to sequence (seq2seq) model for machine translat
 
 This work was inspired in part by *Human-in-the-Loop Machine Learning* by Robert Munro © 2020  
 
-This site was built using [GitHub Pages](https://pages.github.com/).
-For a more thorough summary of this work please have a look at [Uncertainty Scoring in ML](https://pages.github.com/)https://mahaley22.github.io/Uncertainty-Scoring/)
+This site was built using [Uncertainty in MT](https://pages.github.com/)https://mahaley22.github.io/Uncertainty-Scoring/).
+For a more thorough summary of this work please have a look at [Uncertainty Scoring in ML]()
 
 
