@@ -1,11 +1,11 @@
 # Leveraging Model (Un)certainty
 _ Or: : can a model "know" when it's predictions are incorrect or not?_ 
 
-This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
+This work explores model uncertainty scoring in Neural Net Machine Learning error analysis, using Machine Translation (Attention) as a use case.  
 
 ![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true&width="500"&height="450")  ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG?raw=true&width="400"&height="450")
 
-The above two examples are teaser examples uncertainty for a couple of translated sentences.  Basically, the higher the uncertainty for given output token. The first shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The second shows low uncertainty despite the "perplexed"/"confused" switch.  I guess we're certain that we're confused!
+The above two examples are teaser examples uncertainty for a couple of translated sentences.  Basically, the higher the uncertainty for given output token. The first shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The second shows low uncertainty despite the "perplexed"/"confused" switch.  I guess it's certain that we're confused!
 
 The notebook in this repo demonstrates that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.
 
@@ -48,49 +48,58 @@ Let's say you want to rank and find the "most uncertain" outputs (in this case, 
 
 The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (post-optimization) a softmax normalization is added, so that for a given timestamp, all the scores add up to one.
 
-Here I'll just pause to note that the potentital confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics MORE HERE
+Here I'll just pause to note that the potentital confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics in order to gain more insights in our error analysis by uncertainty, as we do in the notebook.  Keep in mind that different metrics can yield different rankings of uncertainty 
 
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
-## Some interesting examples
-One challenge with this datset is that there is a lack of complete alternate reference translations. We consider all word-for-word matches as True Positives. So when mismatches between the source and target do occur, 
+## Some Uncertainty sampling classes
+One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mis=matches.  Let's consider positives and negatives in the context of uncertainty:
 
-1) True Negatives (bad translations):
+1) True Negatives (bad translations with higher uncertainty):
 
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true)
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true&width=300&height=300)
 
+2) *False Negatives* with respect to mis-matches (good alternate translations with low uncertainty): acceptable replacement with an synonymous word or words, e.g. "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
 
-2) False Negatives: acceptable replacement with an synonymous word or words, e.g. "perplexed/confused", "this/that", "keep" vs. "put" (image above).  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty.
-
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG = 100x100)
-<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" raw=true width="500" height="400" />
-
-3) whole section of a sentence that are problematic 
+2a) Partially FN, partially TN hyvrid, where a whole subclause can be correct and then another goes off the rails: 
 ![Image](<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?raw=true&width="1000"&height="500")
 
-4) If we consider mis=matches with high confidence as our definition of False Positives, we do find a few in our exploration of underfitting of the training set and variance of the validation set.
+2b) Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets:
+
+3) False Negatives w.r.t. uncertainty can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
+
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?raw=true&width="500"height="400")
+
+4) If we consider mis=matches with low uncertainty as our definition of False Positives, we do find a few in our exploration of underfitting of the training set and variance of the validation set, again offering up samples we might not have considered otherwise for training or model refinement.
 
 
-Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat explainable.  Also, can knowing more about the model confusion infoitself to try different things, like in this case increase the beam width?
+
+
+Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat explainable.  Also, can knowing more about the model confusion info itself to try different things, like in this case increase the beam width?
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Runner-up%20was%20correct!.PNG?raw=true)
 
 
 ## Aggregate Results
-With some variation in the ratios, the density of matches (positives) is higher the lower the certainty.
+With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  In one run 
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
+But it usually holds true that the distribution is more even but still significant:
 
-But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Positives the higher the uncertainty.
+
+But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Negatives in high uncertainty.
 
 mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.  Put another way, our True Negatives are overwhelmingly concentrated at the high uncertainty percentiles.
 
 ## Conclusions:
-
-I'm not necessarily breaking new ground here for using uncertainty in MT or ML, but thought it would be worthwhile to do exploration with illustrations than raw accuracy or throughput or computational cost.  This shows that :
-1. 
+This is an illustration (with graphs even!) of using uncertainty in ML, using ML as an example.  This type of exploration can lead to better Error analysis:
+1. Uncertainty is positively correlated with True Negatives.
+2. Interpretibility is aided to some extent with score graphs and "runner-up" token translations
+3. Better exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
+3. Part of an early stage of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's
 
 ## References:
-1. 
+1. Human-in-the-Loop Machine Learning by Robert Munro © 2020
+2. 
 
 
 
