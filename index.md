@@ -2,7 +2,7 @@
 
 This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
 
-<img src="https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG" width="500" height="450" /> <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG" width="400" height="450" />
+<img src="https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG" raw=true width="500" height="450" /> <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG" raw=true width="400" height="450" />
 
 As a teaser, the above two examples show uncertainty for a couple of translated sentences.  The higher the bar, the higher the uncertainty for given output token. The left shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The right shows low uncertainty despite the "perplexed"/"confused" switch.  I guess we're certain that we're confused!
 
@@ -51,7 +51,7 @@ One challenge with this datset is that there is a lack of complete alternate ref
 1) acceptable replacement with an synonymous word or words, e.g. "perplexed/confused", "this/that", "keep" vs. "put" (image above).  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG = 100x100)
-<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" width="500" height="400" />
+<img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" raw=true width="500" height="400" />
 
 2) non-acceptable
 
