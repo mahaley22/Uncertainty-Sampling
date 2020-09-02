@@ -3,6 +3,7 @@
 This work explores model uncertainty scoring in Neural Net Machine Learning, using Machine Translation (Attention) as a use case.  
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/A%20slight%20confusion.PNG?raw=true)
+![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true)
 
 Show that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.
 
@@ -52,6 +53,7 @@ One challenge with this datset is that there is a lack of complete alternate ref
 <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" width="500" height="400" />
 
 2) non-acceptable
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true)
 
 3) whole section of a sentence that are problematic 
 <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG" width="1000" height="500" />
