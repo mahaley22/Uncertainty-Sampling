@@ -48,7 +48,7 @@ I'm not necessarily breaking new ground here for using uncertainty in MT or ML, 
 
 ## Some interesting examples
 One challenge with this datset is that there is a lack of complete alternate reference translations.  So when mismatches between the source and target do occur, 
-1) acceptable replacement with an acceptable synonym, e.g. "perplexed/confused", "this/that".  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty
+1) acceptable replacement with an synonymous word or words, e.g. "perplexed/confused", "this/that", "keep" vs. "put" (image above).  These acceptable replacements might have little uncertainty, but plenty do have higher uncertainty
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG = 100x100)
 <img src="https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG" width="500" height="400" />
