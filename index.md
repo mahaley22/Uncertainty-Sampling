@@ -58,11 +58,11 @@ Here I'll just pause to note that the potential confusion (pardon the pun) among
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
 ## Some Uncertainty sampling classes
-One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mis=matches.  (There are no False Positives among Matches)  Let's consider positives and negatives in the context of both uncertainty and matching:
+One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mismatches.  (In other words, there are no False Positives among Matches)  Let's consider positives and negatives in the context of both uncertainty and matching:
 
-1) *True Negatives with respect to mis-matches*:
+1) *True Negatives with respect to mis-matches* (this is easy as there are many of them):
 
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true&width=100&height=100)
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?width=100&height=100)
 
 2) *False Negatives with respect to mis-matches* (good alternate translations with low uncertainty): when we explore this seeming variance in the low uncertainty validation set, we often find acceptable alternate translations, e.g. replacement with an synonymous word or words, e.g. "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
 
@@ -102,9 +102,9 @@ mismatched but "good" mismatched but "bad" - low confidence, so it makes sense f
 
 ## Conclusions:
 This is an illustration (with graphs even!) of using uncertainty in ML, using ML as an example.  This type of exploration can lead to better Error analysis:
-1. Uncertainty is positively correlated with True Negatives.
+1. Uncertainty is positively correlated with True Negatives; both as an aid for human correct and for the purposes of error analysis and iterating on the model itself.
 2. Interpretibility is aided to some extent with score graphs and "runner-up" token translations
-3. Better exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
+3. We present a bit of tooling for (better, easier?) exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
 3. Part of an early stage of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's
 
 ## References:
