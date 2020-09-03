@@ -64,14 +64,15 @@ One challenge with this datset is that there is usually exactly one reference tr
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true)
 
-2) *False Negatives with respect to mis-matches* (good alternate translations with low uncertainty): when we explore this seeming variance in the low uncertainty validation set, we often find acceptable alternate translations, e.g. replacement with an synonymous word or words, e.g. "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
+2) *False Negatives with respect to mis-matches* (good alternate translations with low uncertainty): when we explore this seeming variance in the low uncertainty validation set, we often find acceptable alternate translations, e.g. replacement with an synonymous word or words like "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
 
-    2a) Partially FN, partially TN hybrid, where a whole subclause can be correct and then another goes off the rails: 
+Some interestomg outlier cases:
+- Partially FN, partially TN hybrid, where a whole subclause can be correct and then another goes off the rails: 
     
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?raw=true)
 
-    2b) Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets (Hebrew is *not* ambiguous between animate and inanimate objects!):
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Wrong%20ground%20truth!.PNG)
+- Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets (Hebrew is *not* ambiguous between animate and inanimate objects!):
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Wrong%20ground%20truth!.PNG?raw=true)
 
 3) *False Negatives w.r.t. uncertainty* can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
 
