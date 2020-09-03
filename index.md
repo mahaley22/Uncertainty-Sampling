@@ -21,7 +21,7 @@ The notebook in this repo demonstrates that not only is uncertainty positively c
 
     5) "How":  to improve the model as quickly and cost-effectively as possible?
 
-As a practitioner of Applied ML for a number of years now, I'm not alone in having these questions posed to me at various times (by myself, or worse  by others like internal stakeholders or customers).  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
+As a practitioner of Applied ML for a number of years now, I'm not alone in having these questions posed to me at various times (by myself, or worse  by others like internal stakeholders or customers).  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is (initially) weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
 
 So we all know the saying: all models are wrong, but some are useful. Raw accuracy using a single metric is usually not the only measure of a model.   So how else can a model be useful?
 
@@ -61,7 +61,7 @@ Here I'll just pause to note that the potential confusion (pardon the pun) among
 ## Some Uncertainty sampling classes
 One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mismatches.  (In other words, there are no False Positives among Matches)  Let's consider positives and negatives in the context of both uncertainty and matching:
 
-1) *True Negatives with respect to mis-matches* (this is easy as there are many of them):
+1) *True Negatives with respect to mis-matches and uncertainty* (this is easy as there are many of them where the translation is just wrong and there is high aggregate uncertainty):
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true)
 
@@ -95,9 +95,7 @@ With some variation in the ratios, the density of raw mis-matches (True or False
 
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
 
-But that is not usually the case.  
-But it usually holds true that both the distribution of mis-matched bad translations is weighted in the high uncertainty.  
-
+Way cool, but that is not usually the case.  However, it consistently holds true that both the distribution of mis-matched bad translations is weighted in the high uncertainty.  
 
 But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Negatives in high uncertainty.
 
