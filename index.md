@@ -68,13 +68,13 @@ One challenge with this datset is that there is usually exactly one reference tr
 
     2a) Partially FN, partially TN hybrid, where a whole subclause can be correct and then another goes off the rails: 
     
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?raw=true&width="1000"&height="500")
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?width="1000"&height="500")
 
     2b) Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets:
 
 3) *False Negatives w.r.t. uncertainty* can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
 
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?raw=true&width="500"height="400")
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?width="500"height="400")
 
 4) *False Positives w.r.t. uncertainty*: mis-translations with low uncertainty, we do find a few in our exploration of underfitting of the training set and variance of the validation set, again offering up samples we might not have considered otherwise for training or model refinement.  These will be harder to find with this method but if they do arise in a low uncertainty context, this can be prioritized.
 
@@ -101,11 +101,12 @@ But then with a quick tool for exploration, it's easy to examine the presumptive
 mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.  Put another way, our True Negatives are overwhelmingly concentrated at the high uncertainty percentiles.
 
 ## Conclusions:
-This is an illustration (with graphs even!) of using uncertainty in ML, using ML as an example.  This type of exploration can lead to better Error analysis:
+This is an illustration (with graphs even!) of using uncertainty in ML, using ML as an example.  These types of exploration can lead to better error analysis and Active Learning:
 1. Uncertainty is positively correlated with True Negatives; both as an aid for human correct and for the purposes of error analysis and iterating on the model itself.
 2. Interpretibility is aided to some extent with score graphs and "runner-up" token translations
-3. We present a bit of tooling for (better, easier?) exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
-3. Part of an early stage of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's
+4. We present a bit of tooling for (better, easier?) exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
+5. Part of an early stage of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's model iterations.
+6. Exploring the space of scoring and aggregation methods would seem to be worthwhile.  For example, instead of the means, use the minimums as the aggregation score for sentences.
 
 ## References:
 1. Human-in-the-Loop Machine Learning by Robert Munro © 2020
