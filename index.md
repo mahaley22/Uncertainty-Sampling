@@ -1,7 +1,7 @@
 # Leveraging Model (Un)certainty
 _Can a model "know" when it's predictions are incorrect or not?_ 
 
-This work explores model uncertainty scoring in Neural Net Machine Learning error analysis, using Machine Translation (Attention) as a use case.  
+This work explores model uncertainty scoring for bias/variance and error analysis, using Machine Translation (NN Attention) as a use case.  
 
 ![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true&width="500"&height="450")  ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG?raw=true&width="400"&height="450")
 
@@ -59,9 +59,9 @@ One challenge with this datset is that there is usually exactly one reference tr
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Mistranslation1.PNG?raw=true&width=300&height=300)
 
-2) *False Negatives with respect to mis-matches* (good alternate translations with low uncertainty): often acceptable replacement with an synonymous word or words, e.g. "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
+2) *False Negatives with respect to mis-matches* (good alternate translations with low uncertainty): when we explore this seeming variance in the low uncertainty validation set, we often find acceptable alternate translations, e.g. replacement with an synonymous word or words, e.g. "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
 
-    2a) Partially FN, partially TN hyvrid, where a whole subclause can be correct and then another goes off the rails: 
+    2a) Partially FN, partially TN hybrid, where a whole subclause can be correct and then another goes off the rails: 
     
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?raw=true&width="1000"&height="500")
 
@@ -75,9 +75,9 @@ One challenge with this datset is that there is usually exactly one reference tr
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Believable%20versus%20reliable.PNG?raw=true&width="500"height="400")
 
-5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty in the notebook.
+5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty in the notebook, .
 
-
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Wrong%20ground%20truth!.PNG)
 
 
 Its interesting to note sometimes which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat explainable.  Also, can knowing more about the model confusion info itself to try different things, like in this case increase the beam width?
