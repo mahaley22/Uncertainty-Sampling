@@ -71,7 +71,7 @@ One challenge with this datset is that there is usually exactly one reference tr
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?width="1000"&height="500")
 
     2b) Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets:
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Complete%20mistranslation.PNG)
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Bad%20Ground%20Truth!.PNG)
 
 3) *False Negatives w.r.t. uncertainty* can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
 
