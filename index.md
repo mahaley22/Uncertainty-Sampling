@@ -29,29 +29,29 @@ No matter how accurate or *good* one's model is, not only will there will always
 
 Active Learning comes in to answer some of these questions: How do we optimize for humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  F which outputs should a human have a look at outputs for possible correction and training?  Active Learning has a lot of tools in the toolkit for sampling and iterating, both within the models and outside them.  this model will look at just 2 or 3 in-model metrics to show that 
 
-And yet, by definition the goal of optimizing any machine learning model is not primarily (at least when we're talking about conditional modeling, like in Machine Translation) in the business of generating accurate "probabilities" or confidences for those predictions.  And how explainable/interpretibleare the results?
+And yet, by definition the goal of optimizing any machine learning model is not primarily (at least when we're talking about conditional modeling, like in Machine Translation) in the business of generating accurate "probabilities" or confidences for those predictions.  And how explainable/interpretible are the results?
 
 And worse yet, how can one even tease out such information of a deep learning algorithm, which by its nature is a nested non-linear structure? 
-This notebook strongly indicates a NN model for MT can yield useful information and metrics that are helpful for analysis and Active Learning.
+This notebook is an example of a NN model for MT that can fairly easily yield useful information and metrics that are helpful for error analysis and Active Learning.
 
 ## Methods used
-This notebook trains a sequence to sequence (seq2seq) model for machine translation, using Attention. However, instead of looking at the Attention plots, we do the following:
+This notebook trains a sequence to sequence (seq2seq) model for machine translation, using Attention. However, instead of looking at the Attention plots, we plot and measure Uncertainty scores, which are simply a measure of finding predictions that are near a decision boundary.
 
 1) Explore the data by aggregate uncertainty for analyzing avoidable bias, variance, and sampling for Active Learning
 2) Use Uncertainty plots in order to drive analysis and interpretibility of results.
 
 This work was inspired in part by Human-in-the-Loop Machine Learning by Robert Munro © 2020
 
-For this little exercise I've chosen a toy Machine Learning example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say ... something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility. 
+For this notebook I've chosen a toy Machine Translation example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility. 
 
 So in an active learning cycle using model uncertainty sampling, you want to rank the "most uncertain" outputs (in this case, sentences) in order to gain a better understanding prioritization for error analysis, human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
 
-The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for three somewhat different measures of uncertainty, the 
-a) Least Confidence difference between the score and 1), and 
+The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for three somewhat different measures of uncertainty: 
+a) "Least Confidence" absolute difference between the score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
 b) Margin of Confidence (difference between the top score and its runner-up). 
 c) is simply an aggregation of the first two (by multiplying), and that is what's used in the rest of the notebook for analysis.
 
-No matter what the uncertainy score used, let's say a) or b) above instead of c), or even using a different custom softmax for scoring itself, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer.  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
+No matter what the uncertainty score used, let's say a) or b) above instead of c), or even using a different custom softmax for scoring itself, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer.  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
 Here I'll just pause to note that the potential confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics in order to gain more insights in our error analysis by uncertainty, as we do in the notebook.  Keep in mind that different metrics can yield different rankings of uncertainty 
 
@@ -109,8 +109,8 @@ This is an illustration (with graphs even!) of using uncertainty in ML, using ML
 6. Exploring the space of scoring and aggregation methods would seem to be worthwhile.  For example, instead of the means, use the minimums as the aggregation score for sentences.
 
 ## References:
-1. Human-in-the-Loop Machine Learning by Robert Munro © 2020
-2. 
+1. *Human-in-the-Loop Machine Learning* by Robert Munro © 2020
+2. *Modeling Confidence in Sequence-to-Sequence Models* Niehues, Pham 2019 
 
 
 
