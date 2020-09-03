@@ -45,6 +45,7 @@ For this notebook I've chosen a toy Machine Translation example, which affords s
 So in an active learning cycle using model uncertainty sampling, you want to rank the "most uncertain" outputs (in this case, sentences) in order to gain a better understanding prioritization for error analysis, human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
 
 The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for three somewhat different measures of uncertainty:
+
 a) "Least Confidence" absolute difference between the score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
 
 b) Margin of Confidence (difference between the top score and its runner-up). 
