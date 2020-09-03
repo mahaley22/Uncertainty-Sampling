@@ -67,7 +67,7 @@ One challenge with this datset is that there is usually exactly one reference tr
 
 2) *False Negatives with respect to mis-matches* (good alternate translations with low uncertainty): when we explore this seeming variance in the low uncertainty validation set, we often find acceptable alternate translations, e.g. replacement with an synonymous word or words like "perplexed/confused" (above example), "this/that", "keep" vs. "put" (image above).  These acceptable replacements can be recast as *True Positives* w.r.t. uncertainty scores and added to our reference translations ground truth.
 
-Some interestomg outlier cases:
+Some interesting outlier cases:
 - Partially FN, partially TN hybrid, where a whole subclause can be correct and then another goes off the rails: 
     
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?raw=true)
@@ -83,7 +83,7 @@ Some interestomg outlier cases:
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Believable%20versus%20reliable.PNG?raw=true)
 
-5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty in the notebook, .
+5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty in the notebook.
 
 For error analysis, its interesting to discover using uncertainty which individual words/tokens will have high uncertainty, often indicating at the token level where the translation went awry. This is often indicated by the "runner-up" (2nd highest scoring) translation for that token(s).  This could be of help for humans in the loop correcting these translations using a manual interface, for example.  Thus the outright wrong results are at least somewhat interpretible.  Besides training on more data, its possible that knowing more about the model confusion info itself to try different things, like increasing the beam width.
 
