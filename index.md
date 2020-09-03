@@ -7,7 +7,7 @@ This work explores model uncertainty scoring for bias/variance and error analysi
 
 The above two examples are teaser examples of model uncertainty for a couple of translated sentences.  Basically, the higher the uncertainty bars for a given token, the higher the uncertainty. The first shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The second shows low uncertainty despite the "perplexed"/"confused" switch.  I guess it's certain that we're confused!
 
-The notebook in this repo demonstrates that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.
+The notebook in this repo demonstrates that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.  This work was inspired in part by Human-in-the-Loop Machine Learning by Robert Munro © 2020
 
 ## Intro/Summary
 
@@ -34,26 +34,26 @@ And yet, by definition the goal of optimizing any machine learning model is not 
 And worse yet, how can one even tease out such information of a deep learning algorithm, which by its nature is a nested non-linear structure? 
 This notebook is an example of a NN model for MT that can fairly easily yield useful information and metrics that are helpful for error analysis and Active Learning.
 
-## Methods used
+## Method
 This notebook trains a sequence to sequence (seq2seq) model for machine translation, using Attention. However, instead of looking at the Attention plots, we plot and measure Uncertainty scores, which are simply a measure of finding predictions that are near a decision boundary.
 
 1) Explore the data by aggregate uncertainty for analyzing avoidable bias, variance, and sampling for Active Learning
 2) Use Uncertainty plots in order to drive analysis and interpretibility of results.
 
-This work was inspired in part by Human-in-the-Loop Machine Learning by Robert Munro © 2020
-
 For this notebook I've chosen a toy Machine Translation example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility. 
 
 So in an active learning cycle using model uncertainty sampling, you want to rank the "most uncertain" outputs (in this case, sentences) in order to gain a better understanding prioritization for error analysis, human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
 
-The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for three somewhat different measures of uncertainty: 
+The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for three somewhat different measures of uncertainty:
 a) "Least Confidence" absolute difference between the score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
+
 b) Margin of Confidence (difference between the top score and its runner-up). 
+
 c) is simply an aggregation of the first two (by multiplying), and that is what's used in the rest of the notebook for analysis.
 
 No matter what the uncertainty score used, let's say a) or b) above instead of c), or even using a different custom softmax for scoring itself, *can* change the overall uncertainty rankings of multiple outputs.    That Munro book I cite at the top of the nb emphasizes that there's nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer.  That all the scores add up to 1 leads some to that "probabilistic" confusion, but it doesn't matter.
 
-Here I'll just pause to note that the potential confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Since this is a conditional (distributive) model, the a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics in order to gain more insights in our error analysis by uncertainty, as we do in the notebook.  Keep in mind that different metrics can yield different rankings of uncertainty 
+Here I'll just pause to note that the potential confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  That all the scores add up to 1 leads some to that "probabilistic" confusion.  Especially since the model used conditional (discriminative) model, a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics in order to gain more insights in our error analysis by uncertainty, as we do in the notebook.  Keep in mind that different metrics can yield different rankings of uncertainty, which with enough examples *should* clear one's mind of any probabilistic delusions. ![Image](data:image/jpeg;base64,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)
 
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
@@ -71,14 +71,15 @@ One challenge with this datset is that there is usually exactly one reference tr
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Long%20sentence%20started%20out%20ok.PNG?width="1000"&height="500")
 
     2b) Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets:
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Complete%20mistranslation.PNG)
 
 3) *False Negatives w.r.t. uncertainty* can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?width="500"height="400")
 
-4) *False Positives w.r.t. uncertainty*: mis-translations with low uncertainty, we do find a few in our exploration of underfitting of the training set and variance of the validation set, again offering up samples we might not have considered otherwise for training or model refinement.  These will be harder to find with this method but if they do arise in a low uncertainty context, this can be prioritized.
+4) *False Positives w.r.t. uncertainty*: mis-translations with low uncertainty, we do find a few in our exploration of underfitting of the training set and variance of the validation set, again offering up samples we might not have considered otherwise for training or model refinement.  These will be harder to find with this method but if they do arise in a low uncertainty context, this can be possibly prioritized for discovering training or model flaws.
 
-![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Believable%20versus%20reliable.PNG?raw=true&width="500"height="400")
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Believable%20versus%20reliable.PNG?width="500"height="400")
 
 5) *True Positives w.r.t. uncertainty*: these would be the many examples of matches with low uncertainty in the notebook, .
 
