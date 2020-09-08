@@ -91,12 +91,11 @@ For error analysis, its interesting to discover using uncertainty which individu
 
 
 ## Aggregate Results
-With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  In one run 
-
+With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  For example, in one run:
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
-Way cool, but that is not usually the case.  However, it consistently holds true:
+More typically, the mismatches are a little more evenly distributed.  However, it consistently holds true:
 
-a) that both the distribution of mis-matched bad translations is weighted in the high uncertainty.  
+a) that both the distribution of mis-matched bad translations toward high uncertainty.  
 b) The distribution of *mistranslations* is heavily skewed toward the high uncertainty percentiles.
 
 But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Negatives in high uncertainty.
@@ -112,5 +111,5 @@ This is an illustration (with graphs even!) of using uncertainty in ML, using us
 6. Exploring the space of scoring and aggregation methods would seem to be worthwhile.  For example, instead of the means, use the minimums as the aggregation score for sentences.
 
 ## References:
-1. *Human-in-the-Loop Machine Learning* by Robert Munro © 2020
+1. <a href="https://www.aclweb.org/anthology/W19-8671.pdf">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 https://www.manning.com/books/human-in-the-loop-machine-learning</a>
 2. <a href="https://www.aclweb.org/anthology/W19-8671.pdf">*Modeling Confidence in Sequence-to-Sequence Models* Niehues, Pham 2019</a>
