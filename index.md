@@ -101,11 +101,11 @@ b) The distribution of *mistranslations* (True Negatives) is markedly skewed tow
 
 ## Conclusions
 This is an illustration (with graphs even!) of using uncertainty in ML, using using a MT system as an example.  These types of exploration can lead to better error analysis and Active Learning:
-1. Uncertainty is positively correlated with True Negatives; both as an aid for human correct and for the purposes of error analysis and iterating on the model itself.
-2. Interpretibility is aided to some extent with score graphs and "runner-up" token translations
-4. We present a bit of tooling for (better, easier?) exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
-5. Part of an early stage of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's model iterations.
-6. Exploring the space of scoring and aggregation methods would seem to be worthwhile.  For example, instead of the means, use the minimums as the aggregation score for sentences.
+1. This work shows some tooling for exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
+2. Uncertainty is positively correlated with True Negatives; both as an aid for human correct and for the purposes of error analysis and iterating on the model itself.
+3. Interpretibility is aided to some extent with score graphs and "runner-up" token translations
+4. This type of analysis can be a part of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's model iterations.
+5. Exploring the space of different scoring and aggregation methods would seem to be worthwhile for future work.  For example, instead of the means, use the minimums as the aggregation score for sentences.
 
 ## References:
 1. <a href="https://www.manning.com/books/human-in-the-loop-machine-learning">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 </a>
