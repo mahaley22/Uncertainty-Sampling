@@ -111,4 +111,4 @@ This is an illustration (with graphs even!) of using uncertainty in ML, using us
 
 ## References:
 1. *Human-in-the-Loop Machine Learning* by Robert Munro © 2020
-2. *Modeling Confidence in Sequence-to-Sequence Models* Niehues, Pham 2019 
+2. <a href="https://www.aclweb.org/anthology/W19-8671.pdf">*Modeling Confidence in Sequence-to-Sequence Models* Niehues, Pham 2019</a>
