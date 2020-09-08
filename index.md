@@ -95,8 +95,8 @@ With some variation in the ratios, the density of raw mis-matches (True or False
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
 More typically, the mismatches are a little more evenly distributed.  However, it consistently holds true:
 
-a) that both the distribution of mis-matched bad translations toward high uncertainty.  
-b) The distribution of *mistranslations* is heavily skewed toward the high uncertainty percentiles.
+a) Not only is the distribution of mismatches skewed toward the high uncertainty percentiles, but   
+b) The distribution of *mistranslations* is markedly skewed toward the high uncertainty percentiles, whereas the *alternate acceptable translations* have lower uncertainty.
 
 But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Negatives in high uncertainty.
 
