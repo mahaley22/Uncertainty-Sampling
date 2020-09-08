@@ -111,5 +111,5 @@ This is an illustration (with graphs even!) of using uncertainty in ML, using us
 6. Exploring the space of scoring and aggregation methods would seem to be worthwhile.  For example, instead of the means, use the minimums as the aggregation score for sentences.
 
 ## References:
-1. <a href="https://www.aclweb.org/anthology/W19-8671.pdf">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 https://www.manning.com/books/human-in-the-loop-machine-learning</a>
+1. <a href="https://www.manning.com/books/human-in-the-loop-machine-learning">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 </a>
 2. <a href="https://www.aclweb.org/anthology/W19-8671.pdf">*Modeling Confidence in Sequence-to-Sequence Models* Niehues, Pham 2019</a>
