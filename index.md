@@ -93,14 +93,10 @@ For error analysis, its interesting to discover using uncertainty which individu
 ## Aggregate Results
 With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  For example, in one run:
 **32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
-More typically, the mismatches are a little more evenly distributed.  However, it consistently holds true:
+More typically, the mismatches are a somewhat more evenly distributed, with the following consistent observations:
 
-a) Not only is the distribution of mismatches skewed toward the high uncertainty percentiles, but   
-b) The distribution of *mistranslations* is markedly skewed toward the high uncertainty percentiles, whereas the *alternate acceptable translations* have lower uncertainty.
-
-But then with a quick tool for exploration, it's easy to examine the presumptive Negatives to see if they are True or False Negatives (bad vs. good translations).  There, we find a marked concentration of True Negatives in high uncertainty.
-
-mismatched but "good" mismatched but "bad" - low confidence, so it makes sense for example in an Active Learning scenario to go after the low confident mismatches first.  Put another way, our True Negatives are overwhelmingly concentrated at the high uncertainty percentiles.
+a) Not only is the distribution of mismatches (presumptive Negatives) skewed toward the high uncertainty percentiles, but moreover
+b) The distribution of *mistranslations* (True Negatives) is markedly skewed toward the high uncertainty percentiles, whereas the *alternate acceptable translations* have lower uncertainty.
 
 ## Conclusions:
 This is an illustration (with graphs even!) of using uncertainty in ML, using using a MT system as an example.  These types of exploration can lead to better error analysis and Active Learning:
