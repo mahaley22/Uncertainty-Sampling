@@ -99,7 +99,7 @@ a) Not only is the distribution of mismatches (presumptive Negatives) skewed tow
 
 b) The distribution of *mistranslations* (True Negatives) is markedly skewed toward the high uncertainty percentiles, whereas the *alternate acceptable translations* have lower uncertainty.
 
-## Conclusions:
+## Conclusions
 This is an illustration (with graphs even!) of using uncertainty in ML, using using a MT system as an example.  These types of exploration can lead to better error analysis and Active Learning:
 1. Uncertainty is positively correlated with True Negatives; both as an aid for human correct and for the purposes of error analysis and iterating on the model itself.
 2. Interpretibility is aided to some extent with score graphs and "runner-up" token translations
