@@ -92,8 +92,8 @@ For error analysis, its interesting to discover using uncertainty which individu
 
 ## Aggregate Results
 With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  For example, in one run:
-**32.1%** of the non-matches (potential errors) are found by **10.0%** of the target sentences with the highest uncertainty score.
-More typically, the mismatches are a somewhat more evenly distributed, with the following consistent observations:
+**31.8%** of the potential errors are found by **20.0%** of the target sentences with the highest uncertainty score.
+Results may vary somewhat depending on the training/dev sets, with the following is consistent:
 
 a) Not only is the distribution of mismatches (presumptive Negatives) skewed toward the high uncertainty percentiles, moreover
 
