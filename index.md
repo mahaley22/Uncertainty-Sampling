@@ -113,7 +113,7 @@ This is an illustration (with graphs even!) of using uncertainty in ML, using us
 4. This type of analysis can be a part of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's model iterations.
 5. Exploring the space of different scoring and aggregation methods would seem to be worthwhile for future work.  For example, instead of the means, use the minimums as the aggregation score for sentences.
 
-Feel free to explore some interesting (and funny) translations here: 1. <a href="https://github.com/mahaley22/Uncertainty-Scoring/tree/gh-pages/images">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 </a>
+Feel free to explore some interesting (and funny) translations here: 1. <a href="https://github.com/mahaley22/Uncertainty-Scoring/tree/gh-pages/images">More examples</a>
 
 ## References:
 1. <a href="https://www.manning.com/books/human-in-the-loop-machine-learning">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 </a>
