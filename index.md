@@ -60,9 +60,11 @@ _Competing information:_
 3) Overall uncertainty due to competing information (combining a) and b)), and that is what's used in the rest of the notebook for competing information analysis.
 
 _Level of information:_
+
 4) Level of information (raw logit scores)
 
-_Combining Competing information and Level of Information
+_Combining Competing information and Level of Information:_
+
 5) Level of information combined with competing information (c)
 
 Mainly this notebook uses uncertainty due to competing information ((c) metric above.  However, we that a lack of information could be a used as another selection criterion in some cases.
@@ -115,7 +117,9 @@ High Information combined with high uncertainty for that token(s) can yield some
 ## Aggregate Results
 
 With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  For example, in one run:
+
 **33.6%** of the potential errors are found by **20.0%** of the target sentences with the highest uncertainty score.
+
 Results may vary somewhat depending on the training/dev sets, with the following is consistent:
 
 a) Not only is the distribution of mismatches (presumptive Negatives) skewed toward the high uncertainty percentiles, moreover
@@ -130,7 +134,8 @@ This is an illustration (with graphs even!) of using uncertainty in ML, using us
 4. This type of analysis can be a part of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's model iterations.
 5. Exploring the space of different scoring and aggregation methods would seem to be worthwhile for future work.  For example, instead of the means, use the minimums as the aggregation score for sentences.
 
-Feel free to explore some interesting (and funny) translations here: 1. <a href="https://github.com/mahaley22/Uncertainty-Scoring/tree/gh-pages/images">More examples</a>
+Feel free to explore some interesting (and funny) translations here: <a href="https://github.com/mahaley22/Uncertainty-Scoring/tree/gh-pages/images">More examples</a>
+Also feel free to download and play with this notebook for other languages and metrics!
 
 ## References:
 1. <a href="https://www.manning.com/books/human-in-the-loop-machine-learning">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 </a>
