@@ -105,7 +105,7 @@ For error analysis, its interesting to discover using uncertainty which individu
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Runner-up%20was%20correct!.PNG?raw=true)
 
 ### A note on Level of Information:
-So far we've seen that competing nformation using scores that add up to one using softmax.  Raw logits on the other hand, can indicate the level of information in a particular token or sentence.  While using softmax is very convenient, it is at least interesting to look at the highly variant raw logit scores from the model's last layer:
+So far we've seen that competing information using scores that add up to one using softmax.  Raw logits on the other hand, can indicate the level of information in a particular token or sentence.  While using softmax is very convenient, it is at least interesting to look at the highly variant raw logit scores from the model's last layer:
 
 1. Low Information examples which can indicate problematic or incomplete translations:
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Low%20Information%201.PNG?raw=true)
