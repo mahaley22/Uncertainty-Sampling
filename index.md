@@ -112,7 +112,7 @@ So far we've seen that competing information using scores that add up to one usi
 
 2. High information examples indicating a possibly fluent mis-translations: 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/High%20Information%20and%20Competition%204%20-%20He%20caught%20a%20Poet!.PNG?raw=true)
-High Information combined with high uncertainty for that token(s) can yield some pretty spectacularly wrong replacements!
+High Information combined with high uncertainty for that token(s) can yield some pretty egregious replacements!
 
 ## Aggregate Results
 
