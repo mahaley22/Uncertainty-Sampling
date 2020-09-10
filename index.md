@@ -42,7 +42,7 @@ This notebook trains a sequence to sequence (seq2seq) model for machine translat
 
 For this notebook I've chosen a toy Machine Translation example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility. 
 
-So in an active learning cycle using model uncertainty sampling, you want to rank the "most uncertain" outputs (in this case, sentences) in order to gain a better understanding prioritization for error analysis, human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
+So in an active learning cycle using model uncertainty sampling, the goal is to gather  "most uncertain" outputs (in this case, sentences) using various uncertainty metrics, in order to aid error analysis, and prioritize human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
 
 The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for 5  different measures of uncertainty:
 
