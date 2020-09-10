@@ -50,7 +50,11 @@ a) "Least Confidence" absolute difference between the score and 1 (this is a som
 
 b) Margin of Confidence (difference between the top score and its runner-up). 
 
-c) is simply an aggregation of the first two (by multiplying), and that is what's used in the rest of the notebook for analysis.
+c) Overall uncertainty due to competing information (combining a) and b)), and that is what's used in the rest of the notebook for competing information analysis.
+
+d) Level of information in the overall translation 
+
+Mainly this notebook uses uncertainty due to competing information ((c) metric above.  However, we that a lack of information could be a used as another selection criterion in some cases.
 
 No matter what the uncertainty score used, let's say a) or b) above instead of c), or even using a different custom softmax for scoring itself, *can* change the overall uncertainty rankings of multiple outputs.    There is nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer.  
 
