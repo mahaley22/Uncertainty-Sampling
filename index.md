@@ -44,15 +44,17 @@ For this notebook I've chosen a toy Machine Translation example, which affords s
 
 So in an active learning cycle using model uncertainty sampling, you want to rank the "most uncertain" outputs (in this case, sentences) in order to gain a better understanding prioritization for error analysis, human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
 
-The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for three somewhat different measures of uncertainty:
+The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for 5  different measures of uncertainty:
 
-a) "Least Confidence" absolute difference between the score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
+1) "Least Confidence" absolute difference between the score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
 
-b) Margin of Confidence (difference between the top score and its runner-up). 
+2) Margin of Confidence (difference between the top score and its runner-up). 
 
-c) Overall uncertainty due to competing information (combining a) and b)), and that is what's used in the rest of the notebook for competing information analysis.
+3) Overall uncertainty due to competing information (combining a) and b)), and that is what's used in the rest of the notebook for competing information analysis.
 
-d) Level of information in the overall translation 
+4) Level of information (raw logit scores)
+
+5) Level of information combined with competing information (c)
 
 Mainly this notebook uses uncertainty due to competing information ((c) metric above.  However, we that a lack of information could be a used as another selection criterion in some cases.
 
@@ -96,7 +98,7 @@ For error analysis, its interesting to discover using uncertainty which individu
 
 ## Aggregate Results
 With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  For example, in one run:
-**31.8%** of the potential errors are found by **20.0%** of the target sentences with the highest uncertainty score.
+**33.6%** of the potential errors are found by **20.0%** of the target sentences with the highest uncertainty score.
 Results may vary somewhat depending on the training/dev sets, with the following is consistent:
 
 a) Not only is the distribution of mismatches (presumptive Negatives) skewed toward the high uncertainty percentiles, moreover
@@ -105,11 +107,13 @@ b) The distribution of *mistranslations* (True Negatives) is markedly skewed tow
 
 ## Conclusions
 This is an illustration (with graphs even!) of using uncertainty in ML, using using a MT system as an example.  These types of exploration can lead to better error analysis and Active Learning:
-1. This work shows some tooling for exploration and sampling with for underfitting and variance.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
+1. This work shows some tooling for exploration and sampling with for underfitting and variance, using uncertainty.  Even if a translation output matches a reference translation, uncertainty can be used for analysis and sampling.
 2. Uncertainty is positively correlated with True Negatives; both as an aid for human correct and for the purposes of error analysis and iterating on the model itself.
 3. Interpretibility is aided to some extent with score graphs and "runner-up" token translations
 4. This type of analysis can be a part of a virtuous cycle of model-based Active Learning, with new fixed reference translations to improve our ground truth for training/dev/test, as well as prioritizing the team's model iterations.
 5. Exploring the space of different scoring and aggregation methods would seem to be worthwhile for future work.  For example, instead of the means, use the minimums as the aggregation score for sentences.
+
+Feel free to explore some interesting (and funny) translations here: 1. <a href="https://github.com/mahaley22/Uncertainty-Scoring/tree/gh-pages/images">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 </a>
 
 ## References:
 1. <a href="https://www.manning.com/books/human-in-the-loop-machine-learning">*Human-in-the-Loop Machine Learning* by Robert Munro © 2020 </a>
