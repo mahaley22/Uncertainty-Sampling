@@ -5,11 +5,11 @@ This work explores model uncertainty scoring for bias/variance and error analysi
 
 ![Image](https://github.com/mahaley22/Uncertainty-Sampling/blob/master/Keep%20your%20mask%20on!.PNG?raw=true)  ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Aslightconfusion.PNG?raw=true) 
 
-The above two examples are teaser examples of model uncertainty for a couple of translated sentences.  Basically, the higher the uncertainty bars for a given token, the higher the uncertainty. The first shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The second shows low uncertainty despite the "perplexed"/"confused" switch.  I guess it's certain that we're confused!:confused:
+The above two examples are teaser examples of model uncertainty for a couple of translated sentences.  Basically, the higher the uncertainty bars for a given token, the higher the uncertainty. The first shows an acceptable translation that wasn't too confident: note the "put/keep" uncertainty, and that "mask" shows even higher uncertainty (but I guess we're all still getting used to the mask thing).  The second shows low uncertainty despite the "puzzled"/"confused" switch.  I guess it's certain that we're confused!:confused:
 
 The notebook in this repo demonstrates that not only is uncertainty positively correlated with mismatches from the target translation, but also correlated with mismatches that are actually True Negatives, i.e. not acceptable alternate translations.  This work was inspired in part by Human-in-the-Loop Machine Learning by Robert Munro © 2020
 
-## Intro/Summary
+## Introduction
 
     1) "Where": more automatically detecting errors on "in the wild" unlabelled sets and production
 
@@ -27,7 +27,8 @@ So we all know the saying: all models are wrong, but some are useful. Raw accura
 
 No matter how accurate or *good* one's model is, not only will there will always be things like data drift, concept drift, or simply generalization issues on things the model hasn't seen or tested for before (see checklist paper).  As in other types of software engineering practice (SDLC), how does CI/CD and and exception monitoring in production be done with NN models?
 
-Active Learning comes in to answer some of these questions: How do we optimize for humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  F which outputs should a human have a look at outputs for possible correction and training?  Active Learning has a lot of tools in the toolkit for sampling and iterating, both from data within the models and outside them.  This notebook looks at 3 in-model metrics.
+Active Learning practice attempts to answer some of these questions: How do we optimize for humans in the loop?  How much hand-labeled training do you need up front and on an ongoing basis?  What types of errors can be more easily 
+discovered for analysis?  Which subsets of outputs should humans be targetting for possible correction and training?  Active Learning has a lot of tools in the toolkit for sampling and iterating, both from data within the models and outside them.  This notebook looks at several in-model metrics.
 
 How can metrics from within the model work? By definition the goal of optimizing any machine learning model is not primarily  in the business of generating accurate "probabilities" or confidences for those predictions (at least when we're talking about conditional modeling, like in Machine Translation).  And how explainable/interpretible are the results?
 
@@ -42,18 +43,26 @@ This notebook trains a sequence to sequence (seq2seq) model for machine translat
 
 For this notebook I've chosen a toy Machine Translation example, which affords some fun and interesting examples of how for a given translation output the model may be trying to say something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility. 
 
-So in an active learning cycle using model uncertainty sampling, the goal is to gather  "most uncertain" outputs (in this case, sentences) using various uncertainty metrics, in order to aid error analysis, and prioritize human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
+So in an active learning cycle using model uncertainty sampling, the goal is to gather "most uncertain" outputs (in this case, sentences) using various uncertainty metrics, in order to aid error analysis, and prioritize human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
 
 The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for 5  different measures of uncertainty:
 
-1) "Least Confidence" absolute difference between the score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
+(Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
+
+## Metrics
+In the notebook there are many examples of different metrics of the translation (from left to right):
+
+_Competing information:_
+1) "Least Confidence" absolute difference between the top score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
 
 2) Margin of Confidence (difference between the top score and its runner-up). 
 
 3) Overall uncertainty due to competing information (combining a) and b)), and that is what's used in the rest of the notebook for competing information analysis.
 
+_Level of information:_
 4) Level of information (raw logit scores)
 
+_Combining Competing information and Level of Information
 5) Level of information combined with competing information (c)
 
 Mainly this notebook uses uncertainty due to competing information ((c) metric above.  However, we that a lack of information could be a used as another selection criterion in some cases.
@@ -61,8 +70,6 @@ Mainly this notebook uses uncertainty due to competing information ((c) metric a
 No matter what the uncertainty score used, let's say a) or b) above instead of c), or even using a different custom softmax for scoring itself, *can* change the overall uncertainty rankings of multiple outputs.    There is nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer.  
 
 That all the scores add up to 1 leads some to that "probabilistic" confusion, and also potential confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Especially since the model used conditional (discriminative) model, a given uncertainty score let's say 0.6, is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics in order to gain more insights in our error analysis by uncertainty, as we do in the notebook.  Keep in mind that different metrics can yield different rankings of uncertainty, which with enough examples *should* clear one's mind of any probabilistic delusions. :smiley:
-
-(Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
 ## Some Uncertainty sampling classes
 One challenge with this datset is that there is usually exactly one reference translation.  As a crude start then we can simply consider all word-for-word matches with the single target, andt otherwise these are mismatches.  (In other words, there are no False Positives among Matches)  Let's consider positives and negatives in the context of both uncertainty and matching:
@@ -95,8 +102,18 @@ For error analysis, its interesting to discover using uncertainty which individu
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Runner-up%20was%20correct!.PNG?raw=true)
 
+### A note on Level of Information:
+So far we've seen that competing nformation using scores that add up to one using softmax.  Raw logits on the other hand, can indicate the level of information in a particular token or sentence.  While using softmax is very convenient, it is at least interesting to look at the highly variant raw logit scores from the model's last layer:
+
+1. Low Information examples which can indicate problematic or incomplete translations:
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Low%20Information%201.PNG?raw=true)
+
+2. High information examples indicating a possibly fluent mis-translations: 
+![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/High%20Information%20and%20Competition%204%20-%20He%20caught%20a%20Poet!.PNG?raw=true)
+High Information combined with high uncertainty for that token(s) can yield some pretty spectacularly wrong replacements!
 
 ## Aggregate Results
+
 With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  For example, in one run:
 **33.6%** of the potential errors are found by **20.0%** of the target sentences with the highest uncertainty score.
 Results may vary somewhat depending on the training/dev sets, with the following is consistent:
