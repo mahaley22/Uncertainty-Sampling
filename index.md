@@ -53,6 +53,7 @@ The original model's output just selected the maximum raw score (logits) from ea
 In the notebook there are many examples of different metrics of the translation (from left to right):
 
 _Competing information:_
+
 1) "Least Confidence" absolute difference between the top score and 1 (this is a somewhat confusing term having to do with the sampling method, i.e. picking the "least confident" unlabelled data ranked in descending order)
 
 2) Margin of Confidence (difference between the top score and its runner-up). 
