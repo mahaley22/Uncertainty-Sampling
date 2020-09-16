@@ -90,7 +90,7 @@ Some interesting outlier cases:
 - Mislabelled ground truth!  Usually we can live with these random labelling errors in Deep Learning training with lots of data, unless there is a more systematic error underlying these.  However, this is more important for dev/test sets (Hebrew is *not* ambiguous between animate and inanimate objects!):
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Wrong%20ground%20truth!.PNG?raw=true)
 
-3) *False Negatives w.r.t. uncertainty* can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky" to work on for model refinement/training:
+3) *False Negatives w.r.t. uncertainty* can arise, like the "mask" example above, or here (flight/hotel), which offers up a another class of potential errors (or where the model more or less got "lucky") to work on for model refinement/training:
 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Flight%20vs.%20Hotel.PNG?raw=true)
 
@@ -110,7 +110,7 @@ So far we've seen that competing information using scores that add up to one usi
 1. Low Information examples which can indicate problematic or incomplete translations:
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/Low%20Information%201.PNG?raw=true)
 
-2. High information examples indicating a possibly fluent mis-translations: 
+2. High information examples indicating possibly fluent mis-translations: 
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/High%20Information%20and%20Competition%204%20-%20He%20caught%20a%20Poet!.PNG?raw=true)
 High Information combined with high uncertainty for that token(s) can yield some pretty egregious replacements!
 
