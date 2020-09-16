@@ -115,6 +115,7 @@ So far we've seen that competing information using scores that add up to one usi
 ![Image](https://github.com/mahaley22/Uncertainty-Scoring/blob/gh-pages/images/High%20Information%20and%20Competition%204%20-%20He%20caught%20a%20Poet!.PNG?raw=true)
 High Information combined with high uncertainty for that token(s) can yield some pretty egregious replacements!
 
+
 ## Aggregate Results
 
 With some variation in the ratios, the density of raw mis-matches (True or False Negatives) is positively correlated with uncertainty.  For example, in one run:
@@ -126,6 +127,7 @@ Results may vary somewhat depending on the training/dev sets, with the following
 a) Not only is the distribution of mismatches (presumptive Negatives) skewed toward the high uncertainty percentiles, moreover
 
 b) The distribution of *mistranslations* (True Negatives) is markedly skewed toward the high uncertainty percentiles, whereas the *alternate acceptable translations* have lower uncertainty.
+
 
 ## Conclusions
 This is an illustration (with graphs even!) of using uncertainty in ML, using using a MT system as an example.  These types of exploration can lead to better error analysis and Active Learning:
