@@ -45,7 +45,7 @@ For this notebook I've chosen a toy Machine Translation example, which affords s
 
 So in an active learning cycle using model uncertainty sampling, the goal is to gather "most uncertain" outputs (in this case, sentences) using various uncertainty metrics, in order to aid error analysis, and prioritize human review and possible (re)training, as well as iterating on the model itself, e.g. hyperparameter tuning.  
 
-The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for 3 different measures of uncertainty.
+The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook applies softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for 3 different measures of uncertainty.
 
 (Note: the first third or so of this notebook is mostly setting up the training and model and actually doing the training using an Attention model, adapted and slightly modified from a reference google demo notebook.  Also for reasons having an in-house native speaking spouse, this happens to use Hebrew as the source language, but shouldn't matter since most of the specific examples just compare the English outputs.  Remember, to verify Google Translate is your friend!)
 
