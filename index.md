@@ -11,15 +11,15 @@ The notebook in this repo demonstrates that not only is uncertainty positively c
 
 ## Introduction
 
-    1) "Where": more automatically detecting errors on "in the wild" unlabelled sets and production
+1) "Where": more automatically detecting errors on "in the wild" unlabelled sets and production
 
-    2) "What": targetted sampling for enhancing training or dev/test sets
+2) "What": targetted sampling for enhancing training or dev/test sets
 
-    3) "Why": "Why did the model get this wrong?"  (everybody's favorite question in ML)
+3) "Why": "Why did the model get this wrong?"  (everybody's favorite question in ML)
 
-    4) "When": detecting model drift by measuring aggregate uncertainty
+4) "When": detecting model drift by measuring aggregate uncertainty
 
-    5) "How":  to improve the model as quickly and cost-effectively as possible?
+5) "How":  to improve the model as quickly and cost-effectively as possible?
 
 As a practitioner of Applied ML for a number of years now, I'm not alone in having these questions posed to me at various times (by myself, or worse  by others like internal stakeholders or customers).  So I wanted to try NN model uncertainty to see if it can be useful, even if the model itself is (initially) weaker than we would like.  In fact, that's the whole point: we want to improve the model using all the means we have at our disposal: hyperparameter tuning, training, etc. as part of the Active Learning iterative process.  Bear in mind that information from inside the model is certainly not the only tool to leverage for things like Active Learning.
 
@@ -32,6 +32,7 @@ This notebook trains a Attention-based Encoder-Decoder MT model, and teases out 
 Instead of looking at Attention plots, we plot and measure several Uncertainty Scores, which are simply a measure of finding predictions that are near a decision boundary.  This is done at a couple of levels:
 
 1) Explore the data by aggregate uncertainty for analyzing avoidable bias, variance, and "most uncertain" Uncertainty Sampling.
+
 2) Use Uncertainty plots in order to drive error analysis and interpretibility of results.  Uncertainty measureed at the token/word level can yield information
 
 The choice to build a toy MT model affords some fun and interesting examples of how for a given translation output the model may be trying to say something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility.  
