@@ -60,9 +60,9 @@ _Combining Competing information and Level of Information:_
 
 5) Level of information combined with competing information (c)
 
-Mainly this notebook uses uncertainty due to competing information ((c) metric above.  However, we that a lack of information could be a used as another selection criterion in some cases.
+Mainly this notebook uses uncertainty due to the combined competing information (c) metric above.  However, we that a lack of information could be a used as another selection criterion in some cases.
 
-No matter what the uncertainty score used, let's say a) or b) above instead of c), or even using a different custom softmax for scoring itself, *can* change the overall uncertainty rankings of multiple outputs.    There is nothing probabilistic or magical about softmax for this purpose, but its especially useful for uncertainty when softmax is not originally used as part of the optimization of the final layer.  
+No matter what the uncertainty score used, let's say a) or b) above instead of c), or even using a different custom softmax for scoring itself, *can* change the overall uncertainty rankings of multiple outputs.    There is nothing probabilistic or magical about softmax for this purpose, but it is terribly useful for normalizing for uncertainty and also having the raw logits available for more information. 
 
 That all the scores add up to 1 leads some to that "probabilistic" confusion, and also potential confusion (pardon the pun) among terms like "uncertainty" and "confidence" and "probability".  Especially since the model used conditional (discriminative) model, a given uncertainty score of 0.6  is *not* an indication that there is a 60% probability that this is wrong.  In fact, the point is to try different metrics in order to gain more insights in our error analysis by uncertainty, as we do in the notebook.  Keep in mind that different metrics can yield different rankings of uncertainty, which with enough examples *should* clear one's mind of some probabilistic delusions.  :smiley:
 
