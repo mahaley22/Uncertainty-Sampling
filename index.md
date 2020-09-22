@@ -114,7 +114,7 @@ With some variation in the ratios, the density of raw mis-matches (True or False
 
 **33.6%** of the potential errors are found by **20.0%** of the target sentences with the highest uncertainty score.
 
-Results may vary somewhat depending on the training/dev sets, but always the following holds true:
+Results may vary somewhat depending on the training/dev sets (feel free to try), but the following results are consistent:
 
 a) Not only is the distribution of mismatches (presumptive Negatives) skewed toward the high uncertainty percentiles, moreover
 
