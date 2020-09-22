@@ -37,7 +37,7 @@ Instead of looking at Attention plots, we plot and measure several Uncertainty S
 
 The choice to build a toy MT model affords some fun and interesting examples of how for a given translation output the model may be trying to say something about its own uncertainty.  The choice of MT affords a look at not just on the overall aggregate output sentence uncertainty, but on the constituent tokens which can lend to some interpretibility.  
 
-The original model's output just selected the maximum raw score (logits) from each timestamp.  Afer that (i.e. post-optimization) this notebook applies softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for 3 different measures of uncertainty.
+The original model's output just selected the maximum raw score (logits) from each timestamp.  After that (i.e. post-optimization) this notebook applies softmax normalization to these scores, so that for a given timestamp, all the scores add up to one.  Then, this notebook uses the normalized softmax scores for 3 different measures of uncertainty.
 
 (Note: the first third or so of this notebook is all about setting up the training and model and actually doing the training, and was adapted and lightly modified from a reference google demo notebook.  Also for reasons having to do with having an in-house native speaking spouse, this happens to use Hebrew as the source language, but hopefully this shouldn't matter since most of the specific examples just compare the English outputs.  Remember, Google Translate is still your friend for comparison!)
 
